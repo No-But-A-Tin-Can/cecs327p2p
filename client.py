@@ -6,5 +6,5 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # AF_INET = IPv4 SOCK_S
 
 sock.connect((socket.gethostname(), 10000))
 
-meg = sock.recv(1024)
+msg = sock.recv(1024)
 print(msg.decode("utf-8"))

@@ -4,7 +4,7 @@ import sys
 # Creation of a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # AF_INET = IPv4 SOCK_STREAM = TCP
 
-server_address = (socket.gethostname(), 10000) # server address and port number
+server_address = (socket.gethostname(), 9999) # server address and port number
 print("Starting up on %s port %s" % server_address)
 sock.bind(server_address)
 

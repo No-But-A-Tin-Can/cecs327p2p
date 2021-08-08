@@ -7,6 +7,8 @@ HOST = socket.gethostbyname(socket.gethostname())
 #Using a port that is not in use
 PORT = 9999
 
+list_of_files = []
+
 # AF_INET = IPv4 SOCK_STREAM = TCP
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
     # server address and port number

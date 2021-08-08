@@ -4,6 +4,7 @@ import time
 import os
 
 #Get the host and port to be used
+
 HOST = socket.gethostbyname(socket.gethostname())
 #Using a port that is not in use
 PORT = 9999

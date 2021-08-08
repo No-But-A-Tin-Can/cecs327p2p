@@ -1,17 +1,13 @@
 import socket
 import sys
 
-class Client:
+HOST = socket.gethostbyname(socket.gethostname())
+PORT = 9999
 
-    def __init__(self):
-        HOST = socket.gethostbyname(socket.gethostname())
-        PORT = 9999
-
-        # AF_INET = IPv4 SOCK_STREAM = TCP
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-            sock.connect((HOST, PORT))
-            s.sendall(b'Hello, world!')
-            data = s.recv(1024)
-            full_msg = ''
+# AF_INET = IPv4 SOCK_STREAM = TCP
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+    sock.connect((HOST, PORT))
+    sock.sendall(b'Hello, world!')
+    data = sock.recv(1024)
             
-        print('Recieved', repr(data))
+print('Recieved', repr(data))

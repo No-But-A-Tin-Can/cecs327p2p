@@ -1,8 +1,7 @@
 import socket
 import sys
-import time
 import os
-
+import time
 #turns a list into a string
 def list_to_string(list1):
     stringed_list = '/'.join(list1)
@@ -20,14 +19,11 @@ HOST = socket.gethostbyname(socket.gethostname())
 #Using a port that is not in use
 PORT = 9999
 
-encoded_list = '/'.join(list_of_files).encode('utf-8')
-#[item.encode('utf-8') for item in list_of_files]
-print(encoded_list)
-
 # AF_INET = IPv4 SOCK_STREAM = TCP
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
     #list of files in folder 
     list_of_files = [file.name for file in os.scandir() if file.is_file() and file.name.endswith('.txt')]
+    encoded_list = '/'.join(list_of_files).encode('utf-8')
     sock.connect((HOST, PORT))
     while True:
         time.sleep(2)

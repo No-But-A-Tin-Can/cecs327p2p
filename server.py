@@ -1,6 +1,5 @@
 import socket
 import sys
-import time
 import os
 
 #compares two lists and returns a list of files the server needs and a list of files the client needs
@@ -10,8 +9,7 @@ def compare_files(server_list, client_list):
 
     client_needs = server_set - client_set
     server_needs = client_set - server_set
-    print(type(client_needs))
-    return [server_needs, client_needs]
+    return [list(server_needs), list(client_needs)]
 
 #turns a list into a string
 def list_to_string(list1):
@@ -50,8 +48,10 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
                 #Recieve files that the client has
                 data = clientsocket.recv(1024)
                 data = data.decode()
-                client_file_list = data.split('/')
+                client_file_list = string_to_list(data)
                 needed_files_list = compare_files(list_of_files, client_file_list)
+                server_needs = list_to_string(needed_files_list[0]).encode('utf-8')
+                client_needs = list_to_string(needed_files_list[1])
+                clientsocket.sendall(server_needs)
                 if not data:
                     break
-                clientsocket.sendall(data.encode('utf-8'))

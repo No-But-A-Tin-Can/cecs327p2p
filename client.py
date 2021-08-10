@@ -1,3 +1,5 @@
+from io import FileIO
+from p2p import p2p
 import socket
 import sys
 import time
@@ -5,7 +7,7 @@ import os
 import pickle
 import threading
 import hashlib
-import file_access
+
 
 #Get the host and port to be used
 HOST = socket.gethostbyname(socket.gethostname())
@@ -18,18 +20,19 @@ encoded_list = '/'.join(list_of_files).encode('utf-8')
 #[item.encode('utf-8') for item in list_of_files]
 print(encoded_list)
 
-class client:
+class Client:
 
-    def __init__(self, address, hashlist):
+    # Initilize the client
+    def __init__(self, address, hashlist, path, contents):
 
         # AF_INET = IPv4 SOCK_STREAM = TCP
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-            self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR,1)
-            self.sock.connect((address, PORT))
-            self.previousContent = None
+            sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR,1)
+            sock.connect((address, PORT))
+            print("Succesful Connection to", address)
 
-            # Setting up threads to send the data to server
-            sending_thread = threading.Thread(target=self.send_data)
+        # Setting up threads to send the data to server
+            sending_thread = threading.Thread(target=self.sendFolder, args=(sock, path, contents))
             sending_thread.daemon = True
             sending_thread.start()
 
@@ -72,7 +75,7 @@ class client:
             print("Message recieved from Server: ")
 
             if self.previous_data != msg:
-                file_access.create_file(msg)
+                FileIO.create_file(msg)
                 self.previousContent = msg
 
             return msg

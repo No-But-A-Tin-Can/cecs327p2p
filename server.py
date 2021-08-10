@@ -12,64 +12,65 @@ PORT = 9999
 
 list_of_files = [file.name for file in os.scandir() if file.is_file() and file.name.endswith('.txt')]
 
-def __init__(self, contents):
+class server:
 
-    try:
+    def __init__(self, contents):
 
-        print("********Intitializing Server...Please Wait!********")
+        try:
 
-        self.contents = contents
+            print("********Intitializing Server...Please Wait!********")
 
-        self.activePeers = [] # List all active peers
-        self.activeNetworks = [] # List all active networks
+            self.contents = contents
 
-        # AF_INET = IPv4 SOCK_STREAM = TCP
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+            self.activePeers = [] # List all active peers
+            self.activeNetworks = [] # List all active networks
 
-            # server address and port number
-            server_address = (HOST, PORT) 
-            print("Starting up on %s port %s" % server_address)
+            # AF_INET = IPv4 SOCK_STREAM = TCP
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
 
-            #bind to a port
-            self.sock.bind(server_address)
+                # server address and port number
+                server_address = (HOST, PORT) 
+                print("Starting up on %s port %s" % server_address)
 
-        while True:
-            # begins waiting for connections
-            self.sock.listen(5) 
-            clientsocket, address = sock.accept()
-            with clientsocket:
-                print(f"Connection from {address} has been established.")
-                while True:
-                    data = clientsocket.recv(1024)
-                    data = data.decode()
-                    client_file_list = data.split('/')
-                    print(client_file_list)
-                    print(data)
-                    if not data:
-                        break
-                    clientsocket.sendall(data.encode('utf-8'))
-    except Exception as e:
-        sys.exit()
+                #bind to a port
+                self.sock.bind(server_address)
 
-def run(self):
-        while True:
-            clientsocket, address = self.sock.accept()
-            self.activePeers.append(address)
-            print("LIST OF PEERS: {}".format(self.activePeers))
-            self.send_peers()
-            c_thread = threading.Thread(target=self.controller, args=(clientsocket, address))
-            c_thread.daemon = True
-            c_thread.start()
-            self.networks.append(clientsocket)
-            print("{}, connected".format(address))
-            print("-" * 50)
+            while True:
+                # begins waiting for connections
+                self.sock.listen(5) 
+                clientsocket, address = sock.accept()
+                with clientsocket:
+                    print(f"Connection from {address} has been established.")
+                    while True:
+                        data = clientsocket.recv(1024)
+                        data = data.decode()
+                        client_file_list = data.split('/')
+                        print(client_file_list)
+                        print(data)
+                        if not data:
+                            break
+                        clientsocket.sendall(data.encode('utf-8'))
+        except Exception as e:
+            sys.exit()
 
-def send_peers(self):
-        peer_list = ""
-        for peer in self.activePeers:
-            peer_list = peer_list + str(peer[0]) + ","
+    def run(self):
+            while True:
+                clientsocket, address = self.sock.accept()
+                self.activePeers.append(address)
+                print("LIST OF PEERS: {}".format(self.activePeers))
+                self.send_peers()
+                c_thread = threading.Thread(target=self.controller, args=(clientsocket, address))
+                c_thread.daemon = True
+                c_thread.start()
+                self.activeNetworks.append(clientsocket)
+                print("{}, connected".format(address))
 
-        for network in self.networks:
-            data = b'\x11' + bytes(peer_list, 'utf-8')
-            network.send( b'\x11'+ bytes(peer_list, 'utf-8'))
+    def send_peers(self):
+            peer_list = ""
+            for peer in self.activePeers:
+                peer_list = peer_list + str(peer[0]) + ","
+
+            for network in self.networks:
+                data = b'\x11' + bytes(peer_list, 'utf-8')
+                network.send( b'\x11'+ bytes(peer_list, 'utf-8'))
 

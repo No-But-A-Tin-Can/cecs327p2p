@@ -5,7 +5,7 @@ from server import Server
 import time
 
 class p2p:
-    peers = [] # Create a peer list so server and client can utilize it 
+    peers = ['127.0.0.1'] # Create a peer list so server and client can utilize it 
     
 # Creat a SyncFolder that contains the files to be synced among all peers connected 
 def findDirectory(name):

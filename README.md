@@ -6,3 +6,5 @@ Design a program which allows two or more computers to synchronize files across 
 Example: Nodes P1, P2, . . . Pn have clients C1, C2, . . . Cn installed on each node respectively. F1, F2, . . . Fn are sets of files where F1 is the set of files on node P1, F2 is the set of files on node P2, and so forth. The goal of your program should be the unification of all sets of files, F, so that Pi, Ci ∪ {Fj} on each client.
 
 peer-to-peer project for cecs327
+
+Refrence: https://medium.com/@amannagpal4/how-to-create-your-own-decentralized-file-sharing-service-using-python-2e00005bdc4a

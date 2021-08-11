@@ -37,8 +37,6 @@ class Server:
                 for files in os.listdir(tempPath): # Clears temp folder if there are files stored already
                     os.remove(os.path.join(tempPath, files)) 
                 pass
-            except OSError: 
-                pass
 
             # NOTES: AF_INET = IPv4 SOCK_STREAM = TCP
 
